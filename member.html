@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>부원 소개</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand" onclick="location.href='index.html'">SAMDI</div>
+    <nav class="nav">
+      <a href="intro.html">삼디 소개</a>
+      <a href="member.html">부원 소개</a>
+      <a href="guide.html">3D프린터 가이드라인</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="slider-wrap">
+      <!-- 22기 -->
+      <div class="split-box slide-card">
+        <h2>22기 (2학년)</h2>
+        <div class="slide-view" id="upper-view">
+          <div class="slide-inner" id="upper-inner">
+            <img src="a.jpg" alt="a">
+            <img src="b.jpg" alt="b">
+            <img src="c.jpg" alt="c">
+            <img src="d.jpg" alt="d">
+          </div>
+          <button class="arrow-btn arrow-left" onclick="slidePrev('upper')">&#8249;</button>
+          <button class="arrow-btn arrow-right" onclick="slideNext('upper')">&#8250;</button>
+        </div>
+      </div>
+
+      <!-- 23기 -->
+      <div class="split-box slide-card">
+        <h2>23기 (1학년)</h2>
+        <div class="slide-view" id="lower-view">
+          <div class="slide-inner" id="lower-inner">
+            <img src="2.jpg" alt="2">
+            <img src="3.jpg" alt="3">
+            <img src="4.jpg" alt="4">
+            <img src="5.jpg" alt="5">
+            <img src="6.jpg" alt="6">
+          </div>
+          <button class="arrow-btn arrow-left" onclick="slidePrev('lower')">&#8249;</button>
+          <button class="arrow-btn arrow-right" onclick="slideNext('lower')">&#8250;</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">© 2025 SAMDI. All rights reserved.</footer>
+
+<script>
+/* 슬라이드 제어 (각 inner의 자식 img 개수로 이동폭 계산) */
+function slideNext(which){
+  const inner = which==='upper' ? document.getElementById('upper-inner') : document.getElementById('lower-inner');
+  const imgs = inner.children;
+  const parent = inner.parentElement;
+  const visibleWidth = parent.clientWidth;
+  const itemWidth = imgs[0].clientWidth;
+  const maxIndex = Math.max(0, imgs.length - Math.floor(visibleWidth / itemWidth));
+  let index = Number(parent.getAttribute('data-index') || 0);
+  index = Math.min(maxIndex, index + 1);
+  inner.style.transform = `translateX(-${index * itemWidth}px)`;
+  parent.setAttribute('data-index', index);
+}
+
+function slidePrev(which){
+  const inner = which==='upper' ? document.getElementById('upper-inner') : document.getElementById('lower-inner');
+  const parent = inner.parentElement;
+  let index = Number(parent.getAttribute('data-index') || 0);
+  index = Math.max(0, index - 1);
+  const itemWidth = inner.children[0].clientWidth;
+  inner.style.transform = `translateX(-${index * itemWidth}px)`;
+  parent.setAttribute('data-index', index);
+}
+
+/* 키보드 화살표(선택된 뷰에 포커스가 없더라도 작동) */
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'ArrowLeft') { slidePrev('upper'); slidePrev('lower'); }
+  if(e.key === 'ArrowRight') { slideNext('upper'); slideNext('lower'); }
+});
+
+/* 창 크기 변경시 위치 보정 (이미지 크기 변화에 따라 translate 다시 계산) */
+window.addEventListener('resize', () => {
+  ['upper','lower'].forEach(which => {
+    const inner = which==='upper' ? document.getElementById('upper-inner') : document.getElementById('lower-inner');
+    const parent = inner.parentElement;
+    let index = Number(parent.getAttribute('data-index') || 0);
+    const itemWidth = inner.children[0].clientWidth;
+    inner.style.transform = `translateX(-${index * itemWidth}px)`;
+  });
+});
+</script>
+</body>
+</html>
