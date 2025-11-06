@@ -94,7 +94,7 @@ input[type="text"]{
 .slide-card{background:var(--panel);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 20px rgba(0,0,0,0.35)}
 .slide-view{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:10px}
 .slide-inner{display:flex;transition:transform .45s ease;width:100%}
-.slide-inner img{width:100%;height:420px;object-fit:cover;border-radius:8px;flex-shrink:0}
+.slide-inner img{width:100%;height:auto;object-fit:contain;border-radius:8px;flex-shrink:0}
 
 /* circular arrows */
 .arrow-btn{
@@ -185,3 +185,4 @@ input[type="text"]{
 body:has(.code-wrapper) .login-card {
   width: min(90%, 500px);
 }
+
